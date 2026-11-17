@@ -1,0 +1,65 @@
+Start testing: Oct 07 23:15 IST
+----------------------------------------------------------
+1/3 Testing: self_test
+1/3 Test: self_test
+Command: "/tmp/arinc-local-review-20261007/arinc_host_runner" "--self-test"
+Directory: /tmp/arinc-local-review-20261007
+"self_test" start time: Oct 07 23:15 IST
+Output:
+----------------------------------------------------------
+ARINC self-test PASS (codecs and SHA256; network/storage tested separately)
+<end of output>
+Test time =   0.55 sec
+----------------------------------------------------------
+Test Passed.
+"self_test" end time: Oct 07 23:15 IST
+"self_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/3 Testing: network_transfers
+2/3 Test: network_transfers
+Command: "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3.10" "/Users/sai/Downloads/ARINC-Open-Source-Lib/tests/network_smoke.py" "--runner" "/tmp/arinc-local-review-20261007/arinc_host_runner"
+Directory: /tmp/arinc-local-review-20261007
+"network_transfers" start time: Oct 07 23:15 IST
+Output:
+----------------------------------------------------------
+PASS: FIND over UDP
+PASS: Invalid FIND parameters rejected; valid requests still answered
+PASS: Information accepted, lost DATA retried, and LCL transferred
+PASS: Upload, ARINC 665 load header, 4097-byte payload, completed status
+PASS: Media Defined Download payload and completed status
+PASS: Operator Defined Download listing, selection, payload and completed status
+PASS: Malformed FIND ignored; next valid request answered
+PASS: Empty, malformed and path-traversal load headers rejected; server survives
+PASS: Corrupt and truncated uploads rejected; subsequent valid upload succeeds
+PASS: Target task stopped cleanly
+<end of output>
+Test time =   2.90 sec
+----------------------------------------------------------
+Test Passed.
+"network_transfers" end time: Oct 07 23:15 IST
+"network_transfers" time elapsed: 00:00:02
+----------------------------------------------------------
+
+3/3 Testing: current_config_information
+3/3 Test: current_config_information
+Command: "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3.10" "/Users/sai/Downloads/ARINC-Open-Source-Lib/tests/current_config_smoke.py" "--runner" "/tmp/arinc-local-review-20261007/arinc_host_runner"
+Directory: /tmp/arinc-local-review-20261007
+"current_config_information" start time: Oct 07 23:15 IST
+Output:
+----------------------------------------------------------
+PASS: T01 FIND answered by 127.0.0.1
+PASS: T02 Information: LCL has DEMO-PN/DEMO001 (one lost DATA packet retransmitted)
+PASS: FIND still responds after Information transfer
+ALL 3 CHECKS PASSED in 3.2 s (FIND and Information only; upload/download not tested).
+ARINC 615A THA
+Termination request
+<end of output>
+Test time =   3.49 sec
+----------------------------------------------------------
+Test Passed.
+"current_config_information" end time: Oct 07 23:16 IST
+"current_config_information" time elapsed: 00:00:03
+----------------------------------------------------------
+
+End testing: Oct 07 23:16 IST

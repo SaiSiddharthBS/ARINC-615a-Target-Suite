@@ -1,0 +1,5 @@
+Source repository: https://github.com/UVDR-Team/ARINC-Target.git
+Source commit: 5637366af4f69a6e6fe120a74bce5c0e2497fcde
+Package generator: tools/prepare_office.py
+Production sources: SOURCES.txt
+Integrity manifest: SHA256SUMS.txt

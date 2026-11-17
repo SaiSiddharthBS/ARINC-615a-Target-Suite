@@ -1,0 +1,165 @@
+# Host verification of this exact handoff, not a VxWorks DKM linker recipe.
+cmake_minimum_required(VERSION 3.24)
+project(arinc_office_bundle LANGUAGES CXX)
+if(CMAKE_SYSTEM_NAME STREQUAL "VxWorks")
+  message(FATAL_ERROR "Use Workbench's managed DKM build for C++ initialization and BSP integration; see START_HERE.md")
+endif()
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+find_package(Threads REQUIRED)
+add_library(arinc_office_target STATIC
+  "src/lib/arinc_665/Arinc665.cpp"
+  "src/lib/arinc_665/FileTypeDescription.cpp"
+  "src/lib/arinc_665/MediumNumber.cpp"
+  "src/lib/arinc_665/PartNumber.cpp"
+  "src/lib/arinc_665/SupportedArinc665VersionDescription.cpp"
+  "src/lib/arinc_665/files/Arinc665File.cpp"
+  "src/lib/arinc_665/files/BatchFile.cpp"
+  "src/lib/arinc_665/files/BatchInfo.cpp"
+  "src/lib/arinc_665/files/BatchListFile.cpp"
+  "src/lib/arinc_665/files/CheckValueUtils.cpp"
+  "src/lib/arinc_665/files/FileInfo.cpp"
+  "src/lib/arinc_665/files/FileListFile.cpp"
+  "src/lib/arinc_665/files/ListFile.cpp"
+  "src/lib/arinc_665/files/LoadFileInfo.cpp"
+  "src/lib/arinc_665/files/LoadHeaderFile.cpp"
+  "src/lib/arinc_665/files/LoadInfo.cpp"
+  "src/lib/arinc_665/files/LoadListFile.cpp"
+  "src/lib/arinc_665/files/StringUtils.cpp"
+  "src/lib/arinc_checksum/CheckValue.cpp"
+  "src/lib/arinc_checksum/CheckValueGenerator.cpp"
+  "src/lib/arinc_checksum/CheckValueTypeDescription.cpp"
+  "src/lib/arinc_checksum/implementation/NopCheckValueGenerator.cpp"
+  "src/lib/tftp/RequestTypeDescription.cpp"
+  "src/lib/tftp/Tftp.cpp"
+  "src/lib/tftp/TftpConfiguration.cpp"
+  "src/lib/tftp/TftpOptionsConfiguration.cpp"
+  "src/lib/tftp/TransferStatusDescription.cpp"
+  "src/lib/tftp/clients/Client.cpp"
+  "src/lib/tftp/clients/implementation/ClientImpl.cpp"
+  "src/lib/tftp/clients/implementation/OperationImpl.cpp"
+  "src/lib/tftp/clients/implementation/ReadOperationImpl.cpp"
+  "src/lib/tftp/clients/implementation/WriteOperationImpl.cpp"
+  "src/lib/tftp/files/MemoryFile.cpp"
+  "src/lib/tftp/files/NullSinkFile.cpp"
+  "src/lib/tftp/files/StreamFile.cpp"
+  "src/lib/tftp/packets/AcknowledgementPacket.cpp"
+  "src/lib/tftp/packets/BlockNumber.cpp"
+  "src/lib/tftp/packets/DataPacket.cpp"
+  "src/lib/tftp/packets/ErrorCodeDescription.cpp"
+  "src/lib/tftp/packets/ErrorPacket.cpp"
+  "src/lib/tftp/packets/Options.cpp"
+  "src/lib/tftp/packets/OptionsAcknowledgementPacket.cpp"
+  "src/lib/tftp/packets/Packet.cpp"
+  "src/lib/tftp/packets/PacketHandler.cpp"
+  "src/lib/tftp/packets/PacketStatistic.cpp"
+  "src/lib/tftp/packets/PacketTypeDescription.cpp"
+  "src/lib/tftp/packets/ReadRequestPacket.cpp"
+  "src/lib/tftp/packets/ReadWriteRequestPacket.cpp"
+  "src/lib/tftp/packets/TftpOptions.cpp"
+  "src/lib/tftp/packets/WriteRequestPacket.cpp"
+  "src/lib/tftp/servers/Server.cpp"
+  "src/lib/tftp/servers/Servers.cpp"
+  "src/lib/tftp/servers/implementation/OperationImpl.cpp"
+  "src/lib/tftp/servers/implementation/ReadOperationImpl.cpp"
+  "src/lib/tftp/servers/implementation/ServerImpl.cpp"
+  "src/lib/tftp/servers/implementation/WriteOperationImpl.cpp"
+  "src/lib/arinc_615a/Arinc615a.cpp"
+  "src/lib/arinc_615a/Arinc615aConfiguration.cpp"
+  "src/lib/arinc_615a/Arinc615aVersionDescription.cpp"
+  "src/lib/arinc_615a/OperationTypeDescription.cpp"
+  "src/lib/arinc_615a/StatusCode.cpp"
+  "src/lib/arinc_615a/StatusCodeDescription.cpp"
+  "src/lib/arinc_615a/TargetId.cpp"
+  "src/lib/arinc_615a/files/InitializationFile.cpp"
+  "src/lib/arinc_615a/files/ProtocolFile.cpp"
+  "src/lib/arinc_615a/files/ProtocolFileLogger.cpp"
+  "src/lib/arinc_615a/files/ProtocolFileStatistic.cpp"
+  "src/lib/arinc_615a/files/ProtocolFileTypeDescription.cpp"
+  "src/lib/arinc_615a/files/ProtocolFilename.cpp"
+  "src/lib/arinc_615a/files/Ratio.cpp"
+  "src/lib/arinc_615a/files/String.cpp"
+  "src/lib/arinc_615a/files/download/DownloadOperationAnswerFile.cpp"
+  "src/lib/arinc_615a/files/download/DownloadOperationListFile.cpp"
+  "src/lib/arinc_615a/files/download/DownloadOperationRequestFile.cpp"
+  "src/lib/arinc_615a/files/download/DownloadOperationStatusFile.cpp"
+  "src/lib/arinc_615a/files/information/InformationOperationStatusFile.cpp"
+  "src/lib/arinc_615a/files/information/LoadConfigurationListFile.cpp"
+  "src/lib/arinc_615a/files/upload/UploadOperationRequestFile.cpp"
+  "src/lib/arinc_615a/files/upload/UploadOperationStatusFile.cpp"
+  "src/lib/arinc_615a/find/FindConfiguration.cpp"
+  "src/lib/arinc_615a/find/TargetInformation.cpp"
+  "src/lib/arinc_615a/find/packets/OpcodeDescription.cpp"
+  "src/lib/arinc_615a/find/packets/Packet.cpp"
+  "src/lib/arinc_615a/find/packets/PacketHandler.cpp"
+  "src/lib/arinc_615a/find/packets/PacketStatistic.cpp"
+  "src/lib/arinc_615a/find/packets/Packets.cpp"
+  "src/lib/arinc_615a/find/servers/Server.cpp"
+  "src/lib/arinc_615a/find/servers/implementation/ServerImpl.cpp"
+  "src/lib/arinc_615a/information/DownloadFileStatus.cpp"
+  "src/lib/arinc_615a/information/DownloadStatus.cpp"
+  "src/lib/arinc_615a/information/InitializationResponse.cpp"
+  "src/lib/arinc_615a/information/PartNumber.cpp"
+  "src/lib/arinc_615a/information/Ratio.cpp"
+  "src/lib/arinc_615a/information/Status.cpp"
+  "src/lib/arinc_615a/information/TargetHardware.cpp"
+  "src/lib/arinc_615a/information/UploadLoadStatus.cpp"
+  "src/lib/arinc_615a/information/UploadStatus.cpp"
+  "src/lib/arinc_615a/target/Protocol.cpp"
+  "src/lib/arinc_615a/target/implementation/ErrorOperationImpl.cpp"
+  "src/lib/arinc_615a/target/implementation/InformationOperationImpl.cpp"
+  "src/lib/arinc_615a/target/implementation/MediaDefinedDownloadOperationImpl.cpp"
+  "src/lib/arinc_615a/target/implementation/OperationImpl.cpp"
+  "src/lib/arinc_615a/target/implementation/OperatorDefinedDownloadOperationImpl.cpp"
+  "src/lib/arinc_615a/target/implementation/ProtocolImpl.cpp"
+  "src/lib/arinc_615a/target/implementation/UploadOperationImpl.cpp"
+  "src/lib/arinc_615a/tftp/Arinc615aOptions.cpp"
+  "src/lib/arinc_615a/tftp/ErrorMessage.cpp"
+  "src/lib/arinc_615a/tftp/clients/Client.cpp"
+  "src/lib/arinc_615a/tftp/clients/implementation/ClientImpl.cpp"
+  "src/lib/arinc_615a/tftp/clients/implementation/OperationImpl.cpp"
+  "src/lib/arinc_615a/tftp/clients/implementation/ReadOperationImpl.cpp"
+  "src/lib/arinc_615a/tftp/clients/implementation/WriteOperationImpl.cpp"
+  "src/lib/arinc_615a/tftp/servers/Server.cpp"
+  "src/lib/arinc_615a/tftp/servers/implementation/ReadOperationImpl.cpp"
+  "src/lib/arinc_615a/tftp/servers/implementation/ServerImpl.cpp"
+  "src/lib/arinc_615a/tftp/servers/implementation/WriteOperationImpl.cpp"
+  "src/app/arinc_615a_unit_test/arinc_615a_test_tha/arinc_615a_test_tha.cpp"
+  "src/app/arinc_615a_unit_test/arinc_615a_test_tha/ThaC.cpp"
+  "src/workbench/EntryPoints.cpp"
+  "src/workbench/TestSupport.cpp"
+  "src/app/arinc_615a_unit_test/arinc_615a_test_tha/DownloadOperationConfiguration.cpp"
+  "src/app/arinc_615a_unit_test/arinc_615a_test_tha/InformationOperationConfiguration.cpp"
+  "src/app/arinc_615a_unit_test/arinc_615a_test_tha/OperationConfiguration.cpp"
+  "src/app/arinc_615a_unit_test/arinc_615a_test_tha/TargetDataLoaderConfiguration.cpp"
+  "src/app/arinc_615a_unit_test/arinc_615a_test_tha/TargetInformationOperation.cpp"
+  "src/app/arinc_615a_unit_test/arinc_615a_test_tha/TargetMediaDefinedDownloadOperation.cpp"
+  "src/app/arinc_615a_unit_test/arinc_615a_test_tha/TargetOperatorDefinedDownloadOperation.cpp"
+  "src/app/arinc_615a_unit_test/arinc_615a_test_tha/TargetUploadOperation.cpp"
+  "src/app/arinc_615a_unit_test/arinc_615a_test_tha/UploadOperationConfiguration.cpp"
+)
+target_compile_features(arinc_office_target PUBLIC cxx_std_17)
+target_include_directories(arinc_office_target PUBLIC src/lib src/workbench
+  src/app/arinc_615a_unit_test/arinc_615a_test_tha)
+target_include_directories(arinc_office_target SYSTEM PUBLIC include)
+target_compile_options(arinc_office_target PUBLIC "SHELL:-include arinc_support/BuildConfig.hpp")
+target_compile_definitions(arinc_office_target PUBLIC BOOST_ASIO_DISABLE_KQUEUE
+  BOOST_ASIO_DISABLE_EPOLL BOOST_ASIO_DISABLE_DEV_POLL BOOST_ASIO_DISABLE_SERIAL_PORT
+  BOOST_ASIO_DISABLE_LOCAL_SOCKETS)
+target_link_libraries(arinc_office_target PUBLIC Threads::Threads)
+# Keep the host main excluded from Workbench's recursive C++ source discovery.
+set_source_files_properties(tests/HostRunner.cpp.disabled PROPERTIES LANGUAGE CXX)
+add_executable(arinc_host_runner tests/HostRunner.cpp.disabled)
+target_link_libraries(arinc_host_runner PRIVATE arinc_office_target)
+enable_testing()
+add_test(NAME self_test COMMAND arinc_host_runner --self-test)
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
+add_test(NAME network_transfers COMMAND "${Python3_EXECUTABLE}"
+  "${CMAKE_SOURCE_DIR}/tests/network_smoke.py" --runner "$<TARGET_FILE:arinc_host_runner>")
+set_tests_properties(network_transfers PROPERTIES TIMEOUT 120)
+add_test(NAME current_config_information COMMAND "${Python3_EXECUTABLE}"
+  "${CMAKE_SOURCE_DIR}/tests/current_config_smoke.py" --runner "$<TARGET_FILE:arinc_host_runner>")
+set_tests_properties(current_config_information PROPERTIES TIMEOUT 45)

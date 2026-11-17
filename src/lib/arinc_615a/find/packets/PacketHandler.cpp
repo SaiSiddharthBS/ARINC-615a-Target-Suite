@@ -1,0 +1,75 @@
+// SPDX-License-Identifier: MPL-2.0
+/**
+ * @file
+ * @copyright
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * @author Thomas Vogt, thomas@thomas-vogt.de
+ *
+ * @brief Definition of Class Arinc615a::Find::Packets::PacketHandler.
+ **/
+
+#include "PacketHandler.hpp"
+
+#include <arinc_615a/find/packets/Packet.hpp>
+#include <arinc_615a/find/packets/PacketException.hpp>
+#include <arinc_615a/find/packets/PacketStatistic.hpp>
+
+#include <arinc_support/Logging.hpp>
+
+namespace Arinc615a::Find::Packets {
+
+void PacketHandler::packet( const boost::asio::ip::udp::endpoint &remote, ArincSupport::ConstRawDataSpan rawPacket )
+{
+  switch ( Packet::packetType( rawPacket ) )
+  {
+
+    case Opcode::InformationRequest:
+      try
+      {
+        informationRequestPacket( remote, Packet{ rawPacket } );
+
+        // Update statistic
+        PacketStatistic::globalReceive().packet( Opcode::InformationRequest, rawPacket.size() );
+      }
+      catch ( const InvalidFindPacket &e )
+      {
+        ARINC_LOG_ERROR( "Error decoding/ handling IRQ packet: {}", e.what() );
+
+        // Update statistic
+        PacketStatistic::globalReceive().packet( Opcode::Invalid, rawPacket.size() );
+
+        invalidPacket( remote, rawPacket );
+      }
+      break;
+
+    case Opcode::InformationAnswer:
+      try
+      {
+        informationAnswerPacket( remote, Packet{ rawPacket } );
+
+        // Update statistic
+        PacketStatistic::globalReceive().packet( Opcode::InformationAnswer, rawPacket.size() );
+      }
+      catch ( const InvalidFindPacket &e )
+      {
+        ARINC_LOG_ERROR( "Error decoding/ handling IAN packet: {}", e.what() );
+
+        // Update statistic
+        PacketStatistic::globalReceive().packet( Opcode::Invalid, rawPacket.size() );
+
+        invalidPacket( remote, rawPacket );
+      }
+      break;
+
+    default:
+      // Update statistic
+      PacketStatistic::globalReceive().packet( Opcode::Invalid, rawPacket.size() );
+
+      invalidPacket( remote, rawPacket );
+      break;
+  }
+}
+
+}
