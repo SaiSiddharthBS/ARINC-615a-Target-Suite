@@ -1,0 +1,2 @@
+Test_Default_VSB_ARMARCH8Allvm_LP64_LARGE_SMP/ARINC-Open-Source-Lib_partialImage/Debug/ARINC-Open-Source-Lib_partialImage.o filter=lfs diff=lfs merge=lfs -text
+Test_Default_VSB_ARMARCH8Allvm_LP64_LARGE_SMP/ARINC-Open-Source-Lib/Debug/ARINC-Open-Source-Lib.out filter=lfs diff=lfs merge=lfs -text
